@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>22 Octobre • 1 An d'Amour</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Playfair+Display:ital,wght@0,600;1,400&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Playfair+Display:ital,wght@0,600;1,400&family=Montserrat:wght@300;500;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --gold: #f5d77f;
@@ -20,7 +23,8 @@
             user-select: none;
         }
 
-        body, html {
+        body,
+        html {
             width: 100%;
             height: 100%;
             overflow: hidden;
@@ -324,18 +328,38 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
-            .big-number { font-size: 6rem; }
-            .text-an { font-size: 3.5rem; }
-            .poem-paragraph { font-size: 1.15rem; }
-            #mediaFrame { width: 95vw; height: 60vh; }
+            .big-number {
+                font-size: 6rem;
+            }
+
+            .text-an {
+                font-size: 3.5rem;
+            }
+
+            .poem-paragraph {
+                font-size: 1.15rem;
+            }
+
+            #mediaFrame {
+                width: 95vw;
+                height: 60vh;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <canvas id="spaceCanvas"></canvas>
@@ -350,7 +374,7 @@
         <div id="countdownScreen">
             <div class="subtitle-date">22 Octobre 2026</div>
             <h1 class="countdown-title">1 Année Magnifique Ensemble</h1>
-            
+
             <div class="timer-display">
                 <div class="time-box">
                     <div class="time-value" id="hoursVal">00</div>
@@ -373,7 +397,7 @@
         <!-- SPECTACLE -->
         <div id="showcaseScreen">
             <div id="marvelIntro">
-                <div class="marvel-logo">AVENGERS</div>
+                <div class="marvel-logo">MINIMOY</div>
                 <div class="marvel-sub">Chapitre I • Notre Histoire</div>
             </div>
 
@@ -387,19 +411,58 @@
 
                 <div id="poemContainer">
                     <div class="poem-paragraph" id="p1">
-                        Un an s'est écoulé depuis ce premier regard,<br>
-                        365 jours où mon cœur n'a cessé d'être certain.<br>
-                        Tu as transformé chaque instant en un moment rare.
+                        Ça fait exactement 30 jours <br>
+                        C’était le 22 octobre, ce jour<br>
+                        Oui j’ai finalement eu le courage<br>
+                        La meilleure entreprise de mon âge <br>
+                        <br>
+                        Dès lors je me suis dit<br>
+                        C’est toi que je veux, et puis ?!<br>
+                        Oui, toi seule pour la vie<br>
+                        Et ce même sans l’infini<br>
+
+
                     </div>
                     <div class="poem-paragraph" id="p2">
-                        De nos premiers rires partagés à nos projets d'avenir,<br>
-                        Chaque souvenir gravé est une victoire sur le temps.<br>
-                        À tes côtés, la vie a la couleur d'un plus doux rêve.
+                        Je sais pas écrire des poèmes <br>
+                        Mais je fais comme un bohème <br>
+                        Je me suis battu comme je peux<br>
+                        Pour pouvoir formuler mon vœu :<br>
+                        <br>
+                        Svetlana, my heart CAN I BE YOUR MAN ?!!
                     </div>
                     <div class="poem-paragraph" id="p3">
-                        Merci pour ton amour, ta lumière et ta tendresse.<br>
-                        Aujourd'hui nous célébrons notre premier chapitre,<br>
-                        Et je sais déjà que tous les suivants seront encore plus beaux.
+                        Tu dis oui...
+                    </div>
+                    <div class="poem-paragraph" id="p4">
+                        Nous sommes en 2026, 22è jour du mois d’octobre <br>
+                        Ça fait 1 an que nos chemins se sont croisés <br>
+                        1 an à essayer de lutter contre des jours sombres<br>
+                        1 an à essayer de combattre chacun son passé <br>
+                        <br>
+                        Mais il y a plus de nous, oui<br>
+                        Nos blessures nous ont rattrapés<br>
+                        Plus de nous aujourd’hui<br>
+                        Juste deux entités sous opiacés<br>
+
+
+                    </div>
+                    <div class="poem-paragraph" id="p5">
+                        Peut-être ne continuerais-je pas ce poème <br>
+                        Qu’il y’aura toujours plus de nous dans 1 an<br>
+                        Ou alors devrais-je l’écris sous un autre thème <br>
+                        Parce qu’on aura su aborder un autre pan<br>
+                        <br>
+
+                        J’ai essayé de te retenir<br>
+                        Mais peut-être devrais-je te laisser partir<br>
+                    </div>
+                                        <div class="poem-paragraph" id="p6">
+                        C'est peut être pas approprié, mais j'aimerais le dire : 
+<br>
+<br>
+<br>
+                        Je t'aime Svetlana...
                     </div>
                 </div>
             </div>
@@ -459,7 +522,7 @@
                 try {
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                     playOrchestralPad();
-                } catch(e) {
+                } catch (e) {
                     console.log("Audio non supporté");
                 }
             });
@@ -694,17 +757,30 @@
         }
 
         function showPoemParagraphs() {
+            // Configuration avec délais adaptés à la longueur du texte
             const paragraphs = [
-                document.getElementById('p1'),
-                document.getElementById('p2'),
-                document.getElementById('p3')
+                { el: document.getElementById('p1'), delay: 7000 },  // 7s
+                { el: document.getElementById('p2'), delay: 6000 },  // 6s
+                { el: document.getElementById('p3'), delay: 3500 },  // 3.5s (très court)
+                { el: document.getElementById('p4'), delay: 10000 },  // 9s (strophe longue)
+                { el: document.getElementById('p5'), delay: 10000 }  // 10s (chute du poème)
+                { el: document.getElementById('p6'), delay: 10000 }  // 10s (chute du poème)
             ];
 
-            paragraphs.forEach((p, index) => {
+            let cumulativeTime = 0;
+
+            paragraphs.forEach((item, index) => {
                 setTimeout(() => {
-                    if (index > 0) paragraphs[index - 1].classList.remove('active');
-                    p.classList.add('active');
-                }, index * 8000);
+                    // Masquer le paragraphe précédent
+                    if (index > 0) {
+                        paragraphs[index - 1].el.classList.remove('active');
+                    }
+
+                    // Afficher le paragraphe courant
+                    item.el.classList.add('active');
+                }, cumulativeTime);
+
+                cumulativeTime += item.delay;
             });
         }
 
@@ -725,4 +801,5 @@
         });
     </script>
 </body>
+
 </html>
