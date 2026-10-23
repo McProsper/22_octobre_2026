@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22 Octobre • 1 An d'Amour</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Playfair+Display:ital,wght@0,600;1,400&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #f5d77f;
+            --gold-bright: #fff3a1;
+            --red-marvel: #e50914;
+            --dark-bg: #050508;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--dark-bg);
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+        }
+
+        #spaceCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #appContainer {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 1. ÉCRAN COMPTE À REBOURS */
+        #countdownScreen {
+            text-align: center;
+            padding: 40px 25px;
+            background: rgba(10, 10, 18, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(245, 215, 127, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(229, 9, 20, 0.25);
+            max-width: 600px;
+            width: 90%;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .subtitle-date {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .countdown-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .timer-display {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(245, 215, 127, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            min-width: 85px;
+        }
+
+        .time-value {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gold-bright);
+            text-shadow: 0 0 15px rgba(245, 215, 127, 0.5);
+        }
+
+        .time-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        .ready-text {
+            font-size: 0.95rem;
+            color: #ddd;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .btn-start-now {
+            background: linear-gradient(135deg, var(--red-marvel) 0%, #a0060e 100%);
+            border: 1px solid var(--gold);
+            color: #ffffff;
+            padding: 14px 30px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
+        }
+
+        .btn-start-now:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(245, 215, 127, 0.6);
+        }
+
+        /* 2. SPECTACLE CINE */
+        #showcaseScreen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #marvelIntro {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .marvel-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: 12px;
+            background: linear-gradient(180deg, #fff 0%, #e50914 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(229, 9, 20, 0.8);
+            text-transform: uppercase;
+        }
+
+        .marvel-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 8px;
+            color: var(--gold);
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        #mediaFrame {
+            position: relative;
+            width: 85vw;
+            height: 75vh;
+            max-width: 1100px;
+            max-height: 700px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(245, 215, 127, 0.25);
+            border: 2px solid rgba(245, 215, 127, 0.4);
+            background: #000;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .media-element {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out, transform 6s ease-out;
+            transform: scale(1);
+        }
+
+        .media-element.active {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        #revealSection {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 30;
+            display: none;
+            width: 90%;
+            max-width: 900px;
+        }
+
+        .number-1-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .number-1-container.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .big-number {
+            font-family: 'Cinzel', serif;
+            font-size: 9rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, var(--gold-bright) 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 35px rgba(245, 215, 127, 0.8));
+            line-height: 1;
+        }
+
+        .text-an {
+            font-family: 'Cinzel', serif;
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            color: #ffffff;
+            text-shadow: 0 0 25px rgba(229, 9, 20, 0.8);
+            line-height: 1;
+        }
+
+        #poemContainer {
+            margin-top: 20px;
+            min-height: 180px;
+        }
+
+        .poem-paragraph {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1.5s ease-out;
+            display: none;
+        }
+
+        .poem-paragraph.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #secretAdminZone {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            z-index: 999;
+        }
+
+        #adminModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 500px;
+            background: rgba(15, 15, 25, 0.95);
+            border: 1px solid var(--gold);
+            border-radius: 15px;
+            padding: 25px;
+            z-index: 1000;
+        }
+
+        .admin-btn {
+            background: var(--red-marvel);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .big-number { font-size: 6rem; }
+            .text-an { font-size: 3.5rem; }
+            .poem-paragraph { font-size: 1.15rem; }
+            #mediaFrame { width: 95vw; height: 60vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="spaceCanvas"></canvas>
+    <div id="secretAdminZone" title="Zone Admin Secrète"></div>
+
+    <!-- Element Audio Fichier Optionnel (music.mp3 si présent) -->
+    <audio id="bgAudio" src="Yiruma, (이루마) - River Flows in You.mp3" loop></audio>
+
+    <div id="appContainer">
+
+        <!-- COMPTE À REBOURS -->
+        <div id="countdownScreen">
+            <div class="subtitle-date">22 Octobre 2026</div>
+            <h1 class="countdown-title">1 Année Magnifique Ensemble</h1>
+            
+            <div class="timer-display">
+                <div class="time-box">
+                    <div class="time-value" id="hoursVal">00</div>
+                    <div class="time-label">Heures</div>
+                </div>
+                <div class="time-box">
+                    <div class="time-value" id="minsVal">00</div>
+                    <div class="time-label">Minutes</div>
+                </div>
+                <div class="time-box">
+                    <div class="time-value" id="secsVal">00</div>
+                    <div class="time-label">Secondes</div>
+                </div>
+            </div>
+
+            <p class="ready-text">L'expérience commencera automatiquement à 22h10...</p>
+            <button class="btn-start-now" id="manualStartBtn">Activer le son & Lancer</button>
+        </div>
+
+        <!-- SPECTACLE -->
+        <div id="showcaseScreen">
+            <div id="marvelIntro">
+                <div class="marvel-logo">AVENGERS</div>
+                <div class="marvel-sub">Chapitre I • Notre Histoire</div>
+            </div>
+
+            <div id="mediaFrame"></div>
+
+            <div id="revealSection">
+                <div class="number-1-container" id="numberContainer">
+                    <span class="big-number">1</span>
+                    <span class="text-an">AN</span>
+                </div>
+
+                <div id="poemContainer">
+                    <div class="poem-paragraph" id="p1">
+                        Un an s'est écoulé depuis ce premier regard,<br>
+                        365 jours où mon cœur n'a cessé d'être certain.<br>
+                        Tu as transformé chaque instant en un moment rare.
+                    </div>
+                    <div class="poem-paragraph" id="p2">
+                        De nos premiers rires partagés à nos projets d'avenir,<br>
+                        Chaque souvenir gravé est une victoire sur le temps.<br>
+                        À tes côtés, la vie a la couleur d'un plus doux rêve.
+                    </div>
+                    <div class="poem-paragraph" id="p3">
+                        Merci pour ton amour, ta lumière et ta tendresse.<br>
+                        Aujourd'hui nous célébrons notre premier chapitre,<br>
+                        Et je sais déjà que tous les suivants seront encore plus beaux.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panneau Admin Secret -->
+    <div id="adminModal">
+        <h3 style="color:var(--gold); margin-bottom:15px;">Panneau Secret</h3>
+        <label style="display:block; margin-bottom:5px; font-size:0.85rem;">Heure de déclenchement :</label>
+        <input type="time" id="triggerTimeInput" value="22:10" style="padding:5px; width:100%; margin-bottom:15px;">
+        <button class="admin-btn" id="saveAdminBtn">Fermer & Enregistrer</button>
+    </div>
+
+    <script>
+        let targetHour = 22;
+        let targetMinute = 10;
+        let audioCtx = null;
+        let isAudioPlaying = false;
+
+        const slideshowMedias = [
+            { type: 'image', src: '0A8A3742.JPEG', duration: 4000 },
+            { type: 'video', src: 'IMG_4170.MOV', speed: 1.5 },
+            { type: 'image', src: '0A8A3741.JPEG', duration: 1500 },
+            { type: 'video', src: 'IMG_4172.MOV', speed: 1.5 },
+            { type: 'image', src: '0A8A3740.JPEG', duration: 1500 },
+            { type: 'video', src: 'IMG_4173.MOV', speed: 1.5 },
+            { type: 'image', src: 'IMG_1710.JPEG', duration: 1500 },
+            { type: 'image', src: 'IMG_0850.JPEG', duration: 1500 },
+            { type: 'image', src: 'IMG_0764.JPEG', duration: 1500 },
+            { type: 'video', src: 'D20AF887-E67B-48BD-8CD3-DA61715CEF50.MP4', speed: 1.5 },
+            { type: 'video', src: '5F326514-B428-4AF1-9BC2-18DBB4379090.MP4', speed: 1.5 },
+            { type: 'video', src: '98B7C79B-996C-4EC6-9C72-CB4388C60439.MP4', speed: 1.5 },
+            { type: 'video', src: '3D5F3918-8569-4418-8E84-799D2873C631.MP4', speed: 1.5 },
+            { type: 'image', src: '07bdb4e6-fc55-4154-8de5-8234a14860e9.JPEG', duration: 1500 },
+            { type: 'video', src: '306BA462-AF34-4035-82FE-C1026E728B3D.MP4', speed: 1.5 },
+            { type: 'video', src: '2A7F72DF-B44F-417A-872E-3D34FAAEBB43.MP4', speed: 1.5 },
+            { type: 'video', src: '2D761CB9-07A0-412C-A383-FD357B2716B5.MP4', speed: 1.5 },
+            { type: 'image', src: 'IMG_2340.PNG', duration: 1500 },
+            { type: 'video', src: '28915B90-B298-48B5-90BB-D64C67BB74D5.MP4', speed: 1.5 },
+            { type: 'video', src: '1B5782E5-2BDE-4FE8-BC79-FD350EC51852.MP4', speed: 1.5 },
+        ];
+
+        const finaleVideo = { type: 'video', src: 'IMG_4171.MOV', speed: 1.0 };
+
+        /* --- SOUND ENGINE (Synthétiseur Orchestral Synthétique + Support MP3) --- */
+        const bgAudio = document.getElementById('bgAudio');
+
+        function initAndPlayMusic() {
+            if (isAudioPlaying) return;
+            isAudioPlaying = true;
+
+            // Essayer de lire la musique MP3 si présente
+            bgAudio.volume = 0.6;
+            bgAudio.play().catch(() => {
+                // Fallback synthétiseur audio orchestral Web Audio API
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    playOrchestralPad();
+                } catch(e) {
+                    console.log("Audio non supporté");
+                }
+            });
+        }
+
+        function setMusicVolume(volumeLevel) {
+            if (bgAudio) {
+                bgAudio.volume = volumeLevel;
+            }
+        }
+
+        function playOrchestralPad() {
+            if (!audioCtx) return;
+            const osc1 = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(220, audioCtx.currentTime); // Note A3
+            osc2.type = 'triangle';
+            osc2.frequency.setValueAtTime(329.63, audioCtx.currentTime); // Note E4
+
+            gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.2, audioCtx.currentTime + 3);
+
+            osc1.connect(gain);
+            osc2.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc1.start();
+            osc2.start();
+        }
+
+        /* --- CANVAS SPATIAL --- */
+        const canvas = document.getElementById('spaceCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.alpha = Math.random() * 0.8 + 0.2;
+                this.color = Math.random() > 0.3 ? '#f5d77f' : '#e50914';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        /* --- COMPTE À REBOURS --- */
+        const hoursVal = document.getElementById('hoursVal');
+        const minsVal = document.getElementById('minsVal');
+        const secsVal = document.getElementById('secsVal');
+        let hasTriggered = false;
+
+        function updateCountdown() {
+            if (hasTriggered) return;
+            const now = new Date();
+            const target = new Date();
+            target.setHours(targetHour, targetMinute, 0, 0);
+
+            let diff = target - now;
+            if (diff <= 0) {
+                hoursVal.textContent = "00"; minsVal.textContent = "00"; secsVal.textContent = "00";
+                startMainShowcase();
+                return;
+            }
+
+            const hrs = Math.floor(diff / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            hoursVal.textContent = String(hrs).padStart(2, '0');
+            minsVal.textContent = String(mins).padStart(2, '0');
+            secsVal.textContent = String(secs).padStart(2, '0');
+        }
+
+        const timerInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        document.getElementById('manualStartBtn').addEventListener('click', () => {
+            initAndPlayMusic();
+            startMainShowcase();
+        });
+
+        // Déverrouiller le son au premier clic utilisateur n'importe où
+        document.body.addEventListener('click', () => {
+            initAndPlayMusic();
+        }, { once: true });
+
+        function startMainShowcase() {
+            if (hasTriggered) return;
+            hasTriggered = true;
+            clearInterval(timerInterval);
+            initAndPlayMusic();
+
+            const countdownScreen = document.getElementById('countdownScreen');
+            countdownScreen.style.transition = 'opacity 1s ease';
+            countdownScreen.style.opacity = '0';
+
+            setTimeout(() => {
+                countdownScreen.style.display = 'none';
+                const showcaseScreen = document.getElementById('showcaseScreen');
+                showcaseScreen.style.display = 'flex';
+                runMarvelIntroSequence();
+            }, 1000);
+        }
+
+        function runMarvelIntroSequence() {
+            const marvelIntro = document.getElementById('marvelIntro');
+            marvelIntro.style.opacity = '1';
+
+            setTimeout(() => {
+                marvelIntro.style.opacity = '0';
+                setTimeout(() => {
+                    marvelIntro.style.display = 'none';
+                    startSlideshow();
+                }, 1000);
+            }, 3500);
+        }
+
+        /* --- DIAPORAMA --- */
+        const mediaFrame = document.getElementById('mediaFrame');
+        let currentMediaIndex = 0;
+
+        function startSlideshow() {
+            mediaFrame.style.opacity = '1';
+            playNextMedia();
+        }
+
+        function playNextMedia() {
+            if (currentMediaIndex >= slideshowMedias.length) {
+                playFinaleVideo();
+                return;
+            }
+
+            const item = slideshowMedias[currentMediaIndex];
+            mediaFrame.innerHTML = '';
+
+            if (item.type === 'image') {
+                setMusicVolume(0.6); // Remettre la musique normale pour les photos
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.className = 'media-element active';
+                mediaFrame.appendChild(img);
+
+                setTimeout(() => {
+                    currentMediaIndex++;
+                    playNextMedia();
+                }, item.duration || 4000);
+
+            } else if (item.type === 'video') {
+                setMusicVolume(0.2); // Baisser la musique pendant les vidéos du diaporama
+                const video = document.createElement('video');
+                video.src = item.src;
+                video.className = 'media-element active';
+                video.autoplay = true;
+                video.muted = false;
+                video.playbackRate = item.speed || 1.25;
+                mediaFrame.appendChild(video);
+
+                video.onended = () => { currentMediaIndex++; playNextMedia(); };
+                video.onerror = () => { currentMediaIndex++; playNextMedia(); };
+            }
+        }
+
+        /* --- VIDÉO FINALE IMG_4171 --- */
+        function playFinaleVideo() {
+            mediaFrame.innerHTML = '';
+            setMusicVolume(0.1); // Mettre la musique très basse pour bien entendre sa voix ("Coucou Erika...") !
+
+            const video = document.createElement('video');
+            video.src = finaleVideo.src;
+            video.className = 'media-element active';
+            video.autoplay = true;
+            video.muted = false;
+            video.playbackRate = 1.0;
+            mediaFrame.appendChild(video);
+
+            video.onended = () => { transitionTo1AnReveal(); };
+            video.onerror = () => { transitionTo1AnReveal(); };
+        }
+
+        /* --- RÉVÉLATION 1 AN & POÈME --- */
+        function transitionTo1AnReveal() {
+            setMusicVolume(0.7); // Augmenter la musique pour le final romantique
+            mediaFrame.style.transition = 'opacity 1.5s ease';
+            mediaFrame.style.opacity = '0';
+
+            setTimeout(() => {
+                mediaFrame.style.display = 'none';
+                const revealSection = document.getElementById('revealSection');
+                revealSection.style.display = 'block';
+
+                setTimeout(() => {
+                    document.getElementById('numberContainer').classList.add('visible');
+                    setTimeout(showPoemParagraphs, 1500);
+                }, 300);
+            }, 1500);
+        }
+
+        function showPoemParagraphs() {
+            const paragraphs = [
+                document.getElementById('p1'),
+                document.getElementById('p2'),
+                document.getElementById('p3')
+            ];
+
+            paragraphs.forEach((p, index) => {
+                setTimeout(() => {
+                    if (index > 0) paragraphs[index - 1].classList.remove('active');
+                    p.classList.add('active');
+                }, index * 8000);
+            });
+        }
+
+        /* --- ADMIN SECRETE --- */
+        document.getElementById('secretAdminZone').addEventListener('dblclick', () => {
+            document.getElementById('adminModal').style.display = 'block';
+        });
+
+        document.getElementById('saveAdminBtn').addEventListener('click', () => {
+            const timeVal = document.getElementById('triggerTimeInput').value;
+            if (timeVal) {
+                const parts = timeVal.split(':');
+                targetHour = parseInt(parts[0], 10);
+                targetMinute = parseInt(parts[1], 10);
+                updateCountdown();
+            }
+            document.getElementById('adminModal').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
