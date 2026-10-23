@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>22 Octobre • 1 An d'Amour</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Playfair+Display:ital,wght@0,600;1,400&family=Montserrat:wght@300;500;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Playfair+Display:ital,wght@0,600;1,400&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #f5d77f;
@@ -23,8 +21,7 @@
             user-select: none;
         }
 
-        body,
-        html {
+        body, html {
             width: 100%;
             height: 100%;
             overflow: hidden;
@@ -230,6 +227,8 @@
             display: none;
             width: 90%;
             max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .number-1-container {
@@ -328,34 +327,15 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
-            .big-number {
-                font-size: 6rem;
-            }
-
-            .text-an {
-                font-size: 3.5rem;
-            }
-
-            .poem-paragraph {
-                font-size: 1.15rem;
-            }
-
-            #mediaFrame {
-                width: 95vw;
-                height: 60vh;
-            }
+            .big-number { font-size: 6rem; }
+            .text-an { font-size: 3.5rem; }
+            .poem-paragraph { font-size: 1.15rem; }
+            #mediaFrame { width: 95vw; height: 60vh; }
         }
     </style>
 </head>
@@ -365,8 +345,8 @@
     <canvas id="spaceCanvas"></canvas>
     <div id="secretAdminZone" title="Zone Admin Secrète"></div>
 
-    <!-- Element Audio Fichier Optionnel (music.mp3 si présent) -->
-    <audio id="music.mp3" loop></audio>
+    <!-- Élément Audio (Changer src si ton fichier s'appelle différemment) -->
+    <audio id="bgAudio" src="music.mp3" preload="auto" loop></audio>
 
     <div id="appContainer">
 
@@ -390,7 +370,7 @@
                 </div>
             </div>
 
-            <p class="ready-text">L'expérience commencera automatiquement à 22h10...</p>
+            <p class="ready-text">L'expérience commencera automatiquement...</p>
             <button class="btn-start-now" id="manualStartBtn">Activer le son & Lancer</button>
         </div>
 
@@ -414,21 +394,17 @@
                         Ça fait exactement 30 jours <br>
                         C’était le 22 octobre, ce jour<br>
                         Oui j’ai finalement eu le courage<br>
-                        La meilleure entreprise de mon âge <br>
-                        <br>
+                        La meilleure entreprise de mon âge <br><br>
                         Dès lors je me suis dit<br>
                         C’est toi que je veux, et puis ?!<br>
                         Oui, toi seule pour la vie<br>
                         Et ce même sans l’infini<br>
-
-
                     </div>
                     <div class="poem-paragraph" id="p2">
                         Je sais pas écrire des poèmes <br>
                         Mais je fais comme un bohème <br>
                         Je me suis battu comme je peux<br>
-                        Pour pouvoir formuler mon vœu :<br>
-                        <br>
+                        Pour pouvoir formuler mon vœu :<br><br>
                         Svetlana, my heart CAN I BE YOUR MAN ?!!
                     </div>
                     <div class="poem-paragraph" id="p3">
@@ -438,31 +414,25 @@
                         Nous sommes en 2026, 22è jour du mois d’octobre <br>
                         Ça fait 1 an que nos chemins se sont croisés <br>
                         1 an à essayer de lutter contre des jours sombres<br>
-                        1 an à essayer de combattre chacun son passé <br>
-                        <br>
+                        1 an à essayer de combattre chacun son passé <br><br>
                         Mais il y a plus de nous, oui<br>
                         Nos blessures nous ont rattrapés<br>
                         Plus de nous aujourd’hui<br>
                         Juste deux entités sous opiacés<br>
-
-
                     </div>
                     <div class="poem-paragraph" id="p5">
                         Peut-être ne continuerais-je pas ce poème <br>
                         Qu’il y’aura toujours plus de nous dans 1 an<br>
                         Ou alors devrais-je l’écris sous un autre thème <br>
-                        Parce qu’on aura su aborder un autre pan<br>
-                        <br>
-
+                        Parce qu’on aura su aborder un autre pan<br><br>
                         J’ai essayé de te retenir<br>
                         Mais peut-être devrais-je te laisser partir<br>
                     </div>
-                                        <div class="poem-paragraph" id="p6">
-                        C'est peut être pas approprié, mais j'aimerais le dire : 
-<br>
-<br>
-<br>
+                    <div class="poem-paragraph" id="p6">
+                        C'est peut être pas approprié, mais j'aimerais le dire : <br><br><br>
                         Je t'aime Svetlana...
+                        <br>    
+                        Et merci pour tout !
                     </div>
                 </div>
             </div>
@@ -503,33 +473,39 @@
             { type: 'video', src: '2D761CB9-07A0-412C-A383-FD357B2716B5.MP4', speed: 1.5 },
             { type: 'image', src: 'IMG_2340.PNG', duration: 1500 },
             { type: 'video', src: '28915B90-B298-48B5-90BB-D64C67BB74D5.MP4', speed: 1.5 },
-            { type: 'video', src: '1B5782E5-2BDE-4FE8-BC79-FD350EC51852.MP4', speed: 1.5 },
+            { type: 'video', src: '1B5782E5-2BDE-4FE8-BC79-FD350EC51852.MP4', speed: 1.5 }
         ];
 
         const finaleVideo = { type: 'video', src: 'IMG_4171.MOV', speed: 1.0 };
 
-        /* --- SOUND ENGINE (Synthétiseur Orchestral Synthétique + Support MP3) --- */
+        /* --- SOUND ENGINE SÉCURISÉ --- */
         const bgAudio = document.getElementById('bgAudio');
 
         function initAndPlayMusic() {
-            if (isAudioPlaying) return;
-            isAudioPlaying = true;
-
-            // Essayer de lire la musique MP3 si présente
+            if (!bgAudio) return;
             bgAudio.volume = 0.6;
-            bgAudio.play().catch(() => {
-                // Fallback synthétiseur audio orchestral Web Audio API
-                try {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    playOrchestralPad();
-                } catch (e) {
-                    console.log("Audio non supporté");
-                }
-            });
+            
+            const promise = bgAudio.play();
+            if (promise !== undefined) {
+                promise.then(() => {
+                    isAudioPlaying = true;
+                }).catch(err => {
+                    console.warn("MP3 non disponible ou bloqué, activation du synthétiseur de secours :", err);
+                    try {
+                        if (!audioCtx) {
+                            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        }
+                        if (audioCtx.state === 'suspended') {
+                            audioCtx.resume();
+                        }
+                        playOrchestralPad();
+                    } catch (e) {}
+                });
+            }
         }
 
         function setMusicVolume(volumeLevel) {
-            if (bgAudio) {
+            if (bgAudio && !bgAudio.paused) {
                 bgAudio.volume = volumeLevel;
             }
         }
@@ -541,9 +517,9 @@
             const gain = audioCtx.createGain();
 
             osc1.type = 'sine';
-            osc1.frequency.setValueAtTime(220, audioCtx.currentTime); // Note A3
+            osc1.frequency.setValueAtTime(220, audioCtx.currentTime);
             osc2.type = 'triangle';
-            osc2.frequency.setValueAtTime(329.63, audioCtx.currentTime); // Note E4
+            osc2.frequency.setValueAtTime(329.63, audioCtx.currentTime);
 
             gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.2, audioCtx.currentTime + 3);
@@ -619,7 +595,6 @@
             let diff = target - now;
             if (diff <= 0) {
                 hoursVal.textContent = "00"; minsVal.textContent = "00"; secsVal.textContent = "00";
-                startMainShowcase();
                 return;
             }
 
@@ -640,16 +615,10 @@
             startMainShowcase();
         });
 
-        // Déverrouiller le son au premier clic utilisateur n'importe où
-        document.body.addEventListener('click', () => {
-            initAndPlayMusic();
-        }, { once: true });
-
         function startMainShowcase() {
             if (hasTriggered) return;
             hasTriggered = true;
             clearInterval(timerInterval);
-            initAndPlayMusic();
 
             const countdownScreen = document.getElementById('countdownScreen');
             countdownScreen.style.transition = 'opacity 1s ease';
@@ -676,7 +645,7 @@
             }, 3500);
         }
 
-        /* --- DIAPORAMA --- */
+        /* --- DIAPORAMA ROBUSTE & SÉCURISÉ --- */
         const mediaFrame = document.getElementById('mediaFrame');
         let currentMediaIndex = 0;
 
@@ -694,53 +663,92 @@
             const item = slideshowMedias[currentMediaIndex];
             mediaFrame.innerHTML = '';
 
+            let hasAdvanced = false;
+            const advance = () => {
+                if (!hasAdvanced) {
+                    hasAdvanced = true;
+                    currentMediaIndex++;
+                    playNextMedia();
+                }
+            };
+
             if (item.type === 'image') {
-                setMusicVolume(0.6); // Remettre la musique normale pour les photos
+                setMusicVolume(0.6);
                 const img = document.createElement('img');
                 img.src = item.src;
                 img.className = 'media-element active';
+                img.onerror = advance;
                 mediaFrame.appendChild(img);
 
-                setTimeout(() => {
-                    currentMediaIndex++;
-                    playNextMedia();
-                }, item.duration || 4000);
+                setTimeout(advance, item.duration || 4000);
 
             } else if (item.type === 'video') {
-                setMusicVolume(0.2); // Baisser la musique pendant les vidéos du diaporama
+                setMusicVolume(0.2);
                 const video = document.createElement('video');
                 video.src = item.src;
                 video.className = 'media-element active';
                 video.autoplay = true;
+                video.playsInline = true; // Empêche iOS de bloquer le plein écran
                 video.muted = false;
                 video.playbackRate = item.speed || 1.25;
                 mediaFrame.appendChild(video);
 
-                video.onended = () => { currentMediaIndex++; playNextMedia(); };
-                video.onerror = () => { currentMediaIndex++; playNextMedia(); };
+                video.onended = advance;
+                video.onerror = advance;
+
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // Si le navigateur refuse la vidéo avec du son, jouer en muet
+                        video.muted = true;
+                        video.play().catch(advance);
+                    });
+                }
+
+                // Sécurité : si la vidéo plante ou ne démarre pas sous 12s, passer à la suite
+                setTimeout(() => {
+                    if (!video.ended && video.readyState < 2) advance();
+                }, 12000);
             }
         }
 
         /* --- VIDÉO FINALE IMG_4171 --- */
         function playFinaleVideo() {
             mediaFrame.innerHTML = '';
-            setMusicVolume(0.1); // Mettre la musique très basse pour bien entendre sa voix ("Coucou Erika...") !
+            setMusicVolume(0.1);
+
+            let hasFinished = false;
+            const finish = () => {
+                if (!hasFinished) {
+                    hasFinished = true;
+                    transitionTo1AnReveal();
+                }
+            };
 
             const video = document.createElement('video');
             video.src = finaleVideo.src;
             video.className = 'media-element active';
             video.autoplay = true;
+            video.playsInline = true;
             video.muted = false;
             video.playbackRate = 1.0;
             mediaFrame.appendChild(video);
 
-            video.onended = () => { transitionTo1AnReveal(); };
-            video.onerror = () => { transitionTo1AnReveal(); };
+            video.onended = finish;
+            video.onerror = finish;
+
+            const p = video.play();
+            if (p !== undefined) {
+                p.catch(() => {
+                    video.muted = true;
+                    video.play().catch(finish);
+                });
+            }
         }
 
         /* --- RÉVÉLATION 1 AN & POÈME --- */
         function transitionTo1AnReveal() {
-            setMusicVolume(0.7); // Augmenter la musique pour le final romantique
+            setMusicVolume(0.7);
             mediaFrame.style.transition = 'opacity 1.5s ease';
             mediaFrame.style.opacity = '0';
 
@@ -757,26 +765,22 @@
         }
 
         function showPoemParagraphs() {
-            // Configuration avec délais adaptés à la longueur du texte
             const paragraphs = [
-                { el: document.getElementById('p1'), delay: 7000 },  // 7s
-                { el: document.getElementById('p2'), delay: 6000 },  // 6s
-                { el: document.getElementById('p3'), delay: 3500 },  // 3.5s (très court)
-                { el: document.getElementById('p4'), delay: 9000 },  // 9s (strophe longue)
-                { el: document.getElementById('p5'), delay: 10000 }, // 10s (chute du poème)
-                { el: document.getElementById('p6'), delay: 10000 }  // 10s (chute du poème)
+                { el: document.getElementById('p1'), delay: 7000 },
+                { el: document.getElementById('p2'), delay: 6000 },
+                { el: document.getElementById('p3'), delay: 3500 },
+                { el: document.getElementById('p4'), delay: 12000 },
+                { el: document.getElementById('p5'), delay: 12000 },
+                { el: document.getElementById('p6'), delay: 10000 }
             ];
 
             let cumulativeTime = 0;
 
             paragraphs.forEach((item, index) => {
                 setTimeout(() => {
-                    // Masquer le paragraphe précédent
                     if (index > 0) {
                         paragraphs[index - 1].el.classList.remove('active');
                     }
-
-                    // Afficher le paragraphe courant
                     item.el.classList.add('active');
                 }, cumulativeTime);
 
